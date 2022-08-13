@@ -1,0 +1,40 @@
+
+### get all product types - for ids
+GET http://localhost:3500/producttypes HTTP/1.1
+
+content-type: application/json
+
+### get all product families
+GET http://localhost:3500/productfamilies HTTP/1.1
+
+content-type: application/json
+
+
+### create product family
+POST http://localhost:3500/productfamilies/create HTTP/1.1
+content-type: application/json
+
+{
+    "productFamily" : "Świerk",
+    "productType": "62c0dcd2ad583bff39059b13"
+    
+}
+
+### get product families by type
+GET http://localhost:3500/productfamilies/bytype HTTP/1.1
+content-type: application/json
+
+{
+    "productType": "62c0dcd2ad583bff39059b13"
+}
+
+
+### delete product family
+DELETE http://localhost:3500/productfamilies/delete HTTP/1.1
+content-type: application/json
+
+{
+    "id" : "62c0340e06059a256a40cbe6"
+}
+
+

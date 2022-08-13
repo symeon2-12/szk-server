@@ -1,0 +1,63 @@
+### check if server runnign
+
+GET http://localhost:3500 HTTP/1.1
+
+### get all users
+GET http://localhost:3500/users HTTP/1.1
+
+content-type: application/json
+
+
+### create user
+POST http://localhost:3500/users/create HTTP/1.1
+content-type: application/json
+
+{
+    "name": "4",
+    "pwd": "4",
+    "admin":false
+}
+
+
+### get one user
+GET http://localhost:3500/users/user/62bd972ff1075db2e3b9d8d9 HTTP/1.1
+
+content-type: application/json
+
+### get all users
+GET http://localhost:3500/users HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySW5mbyI6eyJuYW1lIjoiNCIsImFkbWluIjpmYWxzZX0sImlhdCI6MTY1OTcyMzA5MywiZXhwIjoxNjU5NzIzOTkzfQ.6OOaA-d95uoEQDgsn-1cy8Cw5pyUZm3ypTc8fyrELgk
+content-type: application/json
+
+### delete user
+DELETE http://localhost:3500/users/delete HTTP/1.1
+content-type: application/json
+
+{
+    "id" : "62bd972ff1075db2e3b9d8d9"
+}
+
+### get all users tests
+GET http://localhost:3500/users/get HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySW5mbyI6eyJuYW1lIjoiNCIsImFkbWluIjpmYWxzZX0sImlhdCI6MTY1OTcyMzA5MywiZXhwIjoxNjU5NzIzOTkzfQ.6OOaA-d95uoEQDgsn-1cy8Cw5pyUZm3ypTc8fyrELgk
+content-type: application/json
+
+### change password
+PUT http://localhost:3500/users/changepassword HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySW5mbyI6eyJuYW1lIjoiNCIsImFkbWluIjpmYWxzZX0sImlhdCI6MTY1OTcyNDQ2NSwiZXhwIjoxNjYxMDIwNDY1fQ.D2EhAUnz4PCq9qBhlcUXChAAjGI3hYZ9hRJGt9L1QEw
+content-type: application/json
+
+{
+    "oldpwd" : "4334",
+    "newpwd" : "4"
+}
+### reset password
+PUT http://localhost:3500/users/resetpassword HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySW5mbyI6eyJuYW1lIjoiMSIsImFkbWluIjp0cnVlfSwiaWF0IjoxNjU5NzI0NDEyLCJleHAiOjE2NjEwMjA0MTJ9.rFxNvntW4QrsHb3QesLi7xWbvI4c7RNmMzetGukmStg
+content-type: application/json
+
+{
+    "username" : "4"
+}
+
+

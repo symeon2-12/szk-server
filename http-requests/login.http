@@ -1,0 +1,30 @@
+
+
+
+### log in
+POST http://localhost:3500/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "name": "4",
+    "pwd": "zwolen2000"
+}
+
+### log out
+GET http://localhost:3500/auth/logout HTTP/1.1
+Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiNCIsImlhdCI6MTY1Njg3OTUxNywiZXhwIjoxNjU2ODc5NTQ3fQ.MAzdjs_fip12Vg4moPhOGP3CYKWgnmmCBU7vj28keCs; Max-Age=86400; Path=/; Expires=Mon, 04 Jul 2022 20:18:37 GMT; HttpOnly; Secure; SameSite=None
+content-type: application/json
+
+
+### refresh
+GET http://localhost:3500/refresh HTTP/1.1
+Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiNCIsImlhdCI6MTY1Njg3OTc2MCwiZXhwIjoxNjU2ODc5NzkwfQ.H-g7P_L3Y0FbtUNH4YBbgts-O_3hgPZUV_SxzRNWkls; Max-Age=86400; Path=/; Expires=Mon, 04 Jul 2022 20:22:40 GMT; HttpOnly; Secure; SameSite=None
+content-type: application/json
+
+
+
+
+
+
+
+

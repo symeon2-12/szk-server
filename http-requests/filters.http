@@ -1,0 +1,25 @@
+
+### get all filters
+GET http://localhost:3500/filters HTTP/1.1
+
+content-type: application/json
+
+
+### create filters
+POST http://localhost:3500/filters/create HTTP/1.1
+content-type: application/json
+
+{
+    "filter": "światłolubne"
+}
+
+
+### delete filters
+DELETE http://localhost:3500/filters/delete HTTP/1.1
+content-type: application/json
+
+{
+    "id" : "62d3ddb3a67aef4e52908349"
+}
+
+

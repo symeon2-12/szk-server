@@ -1,0 +1,26 @@
+
+### get all usages
+GET http://localhost:3500/galleryimages HTTP/1.1
+
+content-type: application/json
+
+
+### create images
+POST http://localhost:3500/galleryimages/create HTTP/1.1
+content-type: application/json
+
+{
+    "galleryImages": ["114","fasdf"]
+}
+
+
+
+### delete images
+DELETE http://localhost:3500/galleryimages/delete HTTP/1.1
+content-type: application/json
+
+{
+    "ids" : ["62e502ac3ec474a37311aa4d","62e502ac3ec474a37311aa4b"]
+}
+
+

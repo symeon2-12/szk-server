@@ -1,0 +1,25 @@
+
+### get all usages
+GET http://localhost:3500/producttypes HTTP/1.1
+
+content-type: application/json
+
+
+### create user
+POST http://localhost:3500/producttypes/create HTTP/1.1
+content-type: application/json
+
+{
+    "productType": "Krzew"
+}
+
+
+### delete type
+DELETE http://localhost:3500/producttypes/delete HTTP/1.1
+content-type: application/json
+
+{
+    "id" : "62c0dcd6ad583bff39059b16"
+}
+
+
