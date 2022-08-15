@@ -18,10 +18,10 @@ describe("changeNoTorange", () => {
 
   it("test 4", () => {
     const result = changeNoToRanges([2, 4, 5]);
-    expect(result).toEqual("luty,kwiecień-maj");
+    expect(result).toEqual("luty, kwiecień-maj");
   });
   it("test 4", () => {
     const result = changeNoToRanges([1, 4, 10, 11, 12]);
-    expect(result).toEqual("styczeń,kwiecień,październik-grudzień");
+    expect(result).toEqual("styczeń, kwiecień, październik-grudzień");
   });
 });

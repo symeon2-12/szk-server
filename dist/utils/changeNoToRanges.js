@@ -23,7 +23,7 @@ const changeNoToRanges = (arr) => {
     let str = nArr.reduce((previousValue, currentValue, i, array) => {
         return arr[i - 1] === arr[i] - 1
             ? previousValue + "-" + currentValue
-            : previousValue + "," + currentValue;
+            : previousValue + ", " + currentValue;
     }, "");
     str = str.replace(",", ""); //replace first ,
     //console.log(str);
