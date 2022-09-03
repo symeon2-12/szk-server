@@ -2,6 +2,7 @@ import * as cors from "cors";
 const allowedOrigins = [
   "https://www.yoursite.com",
   "http://127.0.0.1:5500",
+  "http://1.0.0.1:5500",
   "http://localhost:3500",
   "http://localhost:3000",
   "https://szkolkakrzelowscy.netlify.app",

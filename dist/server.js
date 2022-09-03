@@ -24,10 +24,14 @@ const cors = require("cors");
 const corsOptions_1 = __importDefault(require("./config/corsOptions"));
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+const helmet = require("helmet");
 // Connect to MongoDB
 (0, dbConn_1.default)();
 // custom middleware logger
 app.use(logEvents_1.logger);
+//use helemt
+app.use(helmet());
 // Handle options credentials check - before CORS!
 // and fetch cookies credentials requirement
 app.use(credentials_1.default);
