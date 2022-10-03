@@ -47,6 +47,46 @@ const createProductFamily = (req, res) => __awaiter(void 0, void 0, void 0, func
         console.error(err);
     }
 });
+const updateProductFamily = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    try {
+        if (!((_a = req === null || req === void 0 ? void 0 : req.body) === null || _a === void 0 ? void 0 : _a.id)) {
+            return res
+                .status(400)
+                .json({ message: "Product family ID parameter is required." });
+        }
+        const productFamily = yield ProductFamily_1.default.findOne({
+            _id: req.body.id,
+        }).exec();
+        if (!productFamily) {
+            return res
+                .status(409)
+                .json({ message: `No product family matches ID ${req.body.id}.` });
+        }
+        const productFamily2 = yield ProductFamily_1.default.findOne({
+            productFamily: req.body.productFamily,
+            productType: req.body.productType,
+        }).exec();
+        if (productFamily2 && (productFamily2 === null || productFamily2 === void 0 ? void 0 : productFamily2.id) !== (productFamily === null || productFamily === void 0 ? void 0 : productFamily.id)) {
+            console.log({ message: `Naming conflict` });
+            return res.status(409).json({ message: `Naming conflict`, aa: "bb" });
+        }
+        const productTypeCheck = yield ProductType_1.default.exists({
+            _id: req.body.productType,
+        });
+        if (!productTypeCheck)
+            return res.status(409).json({ message: "product type check incorrect" }); //Conflict
+        if ((_b = req.body) === null || _b === void 0 ? void 0 : _b.productType) {
+            productFamily.productFamily = req.body.productFamily;
+            productFamily.productType = req.body.productType;
+        }
+        const result = yield productFamily.save();
+        res.json(result);
+    }
+    catch (error) {
+        res.status(400).json(error);
+    }
+});
 const getAllProductFamilies = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const productFamilies = yield ProductFamily_1.default.find()
         .populate("productType", "productType")
@@ -72,9 +112,9 @@ const getAllProductFamilies = (req, res) => __awaiter(void 0, void 0, void 0, fu
     });
 });
 const getProductFamiliesWithType = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
-    console.log((_a = req === null || req === void 0 ? void 0 : req.body) === null || _a === void 0 ? void 0 : _a.productType);
-    if (!((_b = req === null || req === void 0 ? void 0 : req.body) === null || _b === void 0 ? void 0 : _b.productType))
+    var _c, _d;
+    console.log((_c = req === null || req === void 0 ? void 0 : req.body) === null || _c === void 0 ? void 0 : _c.productType);
+    if (!((_d = req === null || req === void 0 ? void 0 : req.body) === null || _d === void 0 ? void 0 : _d.productType))
         return res.status(400).json({ message: "Product type required" });
     const productFamiliy = yield ProductFamily_1.default.find({
         productType: req.body.productType,
@@ -88,8 +128,8 @@ const getProductFamiliesWithType = (req, res) => __awaiter(void 0, void 0, void 
     res.json(productFamiliy.sort((a, b) => a.productFamily.localeCompare(b.productFamily)));
 });
 const deleteProductFamily = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _c;
-    const id = (_c = req === null || req === void 0 ? void 0 : req.body) === null || _c === void 0 ? void 0 : _c.id;
+    var _e;
+    const id = (_e = req === null || req === void 0 ? void 0 : req.body) === null || _e === void 0 ? void 0 : _e.id;
     if (!id)
         return res.status(400).json({ message: "Family ID required" });
     if (!mongoose_1.default.Types.ObjectId.isValid(id))
@@ -116,4 +156,5 @@ exports.default = {
     getAllProductFamilies,
     getProductFamiliesWithType,
     deleteProductFamily,
+    updateProductFamily,
 };

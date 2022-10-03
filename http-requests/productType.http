@@ -5,12 +5,21 @@ GET http://localhost:3500/producttypes HTTP/1.1
 content-type: application/json
 
 
-### create user
+### create type
 POST http://localhost:3500/producttypes/create HTTP/1.1
 content-type: application/json
 
 {
     "productType": "Krzew"
+}
+
+### update product type
+PUT http://localhost:3500/producttypes/update HTTP/1.1
+content-type: application/json
+
+{
+    "id":"62d08ea41def37719971b1482",
+"productType": "Bylina"
 }
 
 

@@ -61,36 +61,41 @@ const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
-    if (!((_a = req === null || req === void 0 ? void 0 : req.body) === null || _a === void 0 ? void 0 : _a.id)) {
-        return res
-            .status(400)
-            .json({ message: "Product ID parameter is required." });
+    try {
+        if (!((_a = req === null || req === void 0 ? void 0 : req.body) === null || _a === void 0 ? void 0 : _a.id)) {
+            return res
+                .status(400)
+                .json({ message: "Product ID parameter is required." });
+        }
+        const product = yield Product_1.default.findOne({ _id: req.body.id }).exec();
+        if (!product) {
+            return res
+                .status(409)
+                .json({ message: `No product matches ID ${req.body.id}.` });
+        }
+        const product2 = yield Product_1.default.findOne({ name: req.body.name }).exec();
+        if (product2 && (product2 === null || product2 === void 0 ? void 0 : product2.id) !== (product === null || product === void 0 ? void 0 : product.id)) {
+            console.log({ message: `Naming conflict` });
+            return res.status(409).json({ message: `Naming conflict`, aa: "bb" });
+        }
+        if ((_b = req.body) === null || _b === void 0 ? void 0 : _b.name) {
+            product.name = req.body.name;
+            product.productType = req.body.productType;
+            product.productFamily = req.body.productFamily;
+            product.filters = req.body.filters;
+            product.seasonality = req.body.seasonality;
+            product.availability = req.body.availability;
+            product.price = req.body.price;
+            product.description = req.body.description;
+            product.imagesurls = req.body.imagesurls;
+            product.thumbnailurl = req.body.thumbnailurl;
+        }
+        const result = yield product.save();
+        res.json(result);
     }
-    const product = yield Product_1.default.findOne({ _id: req.body.id }).exec();
-    if (!product) {
-        return res
-            .status(409)
-            .json({ message: `No product matches ID ${req.body.id}.` });
+    catch (error) {
+        res.status(400).json(error);
     }
-    const product2 = yield Product_1.default.findOne({ name: req.body.name }).exec();
-    if (product2 && (product2 === null || product2 === void 0 ? void 0 : product2.id) !== (product === null || product === void 0 ? void 0 : product.id)) {
-        console.log({ message: `Naming conflict` });
-        return res.status(409).json({ message: `Naming conflict`, aa: "bb" });
-    }
-    if ((_b = req.body) === null || _b === void 0 ? void 0 : _b.name) {
-        product.name = req.body.name;
-        product.productType = req.body.productType;
-        product.productFamily = req.body.productFamily;
-        product.filters = req.body.filters;
-        product.seasonality = req.body.seasonality;
-        product.availability = req.body.availability;
-        product.price = req.body.price;
-        product.description = req.body.description;
-        product.imagesurls = req.body.imagesurls;
-        product.thumbnailurl = req.body.thumbnailurl;
-    }
-    const result = yield product.save();
-    res.json(result);
 });
 const getAllProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const products = yield Product_1.default.find()

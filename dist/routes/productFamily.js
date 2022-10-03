@@ -10,4 +10,5 @@ router.post("/create", verifyJWT_1.default, productFamilyController_1.default.cr
 router.get("/", productFamilyController_1.default.getAllProductFamilies);
 router.get("/bytype", productFamilyController_1.default.getProductFamiliesWithType);
 router.delete("/delete", verifyJWT_1.default, productFamilyController_1.default.deleteProductFamily);
+router.put("/update", productFamilyController_1.default.updateProductFamily);
 module.exports = router;

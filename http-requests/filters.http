@@ -22,4 +22,13 @@ content-type: application/json
     "id" : "62d3ddb3a67aef4e52908349"
 }
 
+### update filters
+PUT http://localhost:3500/filters/update HTTP/1.1
+content-type: application/json
+
+{
+    "id":"62f92e15e7321a0279217bfd",
+    "filter": "Cieniolubne3"
+}
+
 

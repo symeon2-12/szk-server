@@ -5,8 +5,9 @@ import verifyAdmin from "../middleware/verifyAdmin";
 
 const router = express.Router();
 
-router.post("/create", controller.createFilter);
+router.post("/create", verifyJWT, controller.createFilter);
 router.get("/", controller.getAllFilters);
-router.delete("/delete", controller.deleteFilter);
+router.delete("/delete", verifyJWT, controller.deleteFilter);
+router.put("/update", verifyJWT, controller.updateFilter);
 
 export = router;

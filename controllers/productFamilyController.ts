@@ -3,7 +3,6 @@ import mongoose, { ObjectId, Schema } from "mongoose";
 import Product from "../model/Product";
 import ProductType from "../model/ProductType";
 import ProductFamily from "../model/ProductFamily";
-import { fi } from "date-fns/locale";
 
 const createProductFamily = async (req: Request, res: Response) => {
   const { productFamily, productType } = req.body;
@@ -38,6 +37,49 @@ const createProductFamily = async (req: Request, res: Response) => {
     res.status(201).json(result);
   } catch (err) {
     console.error(err);
+  }
+};
+
+const updateProductFamily = async (req: Request, res: Response) => {
+  try {
+    if (!req?.body?.id) {
+      return res
+        .status(400)
+        .json({ message: "Product family ID parameter is required." });
+    }
+
+    const productFamily = await ProductFamily.findOne({
+      _id: req.body.id,
+    }).exec();
+    if (!productFamily) {
+      return res
+        .status(409)
+        .json({ message: `No product family matches ID ${req.body.id}.` });
+    }
+
+    const productFamily2 = await ProductFamily.findOne({
+      productFamily: req.body.productFamily,
+      productType: req.body.productType,
+    }).exec();
+    if (productFamily2 && productFamily2?.id !== productFamily?.id) {
+      console.log({ message: `Naming conflict` });
+      return res.status(409).json({ message: `Naming conflict`, aa: "bb" });
+    }
+    const productTypeCheck = await ProductType.exists({
+      _id: req.body.productType,
+    });
+
+    if (!productTypeCheck)
+      return res.status(409).json({ message: "product type check incorrect" }); //Conflict
+
+    if (req.body?.productType) {
+      productFamily.productFamily = req.body.productFamily;
+      productFamily.productType = req.body.productType;
+    }
+    const result = await productFamily.save();
+    res.json(result);
+  } catch (error) {
+    res.status(400).json(error);
   }
 };
 
@@ -115,4 +157,5 @@ export default {
   getAllProductFamilies,
   getProductFamiliesWithType,
   deleteProductFamily,
+  updateProductFamily,
 };

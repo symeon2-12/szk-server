@@ -36,6 +36,37 @@ const createProductType = (req, res) => __awaiter(void 0, void 0, void 0, functi
         console.error(err);
     }
 });
+const updateProductType = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    try {
+        if (!((_a = req === null || req === void 0 ? void 0 : req.body) === null || _a === void 0 ? void 0 : _a.id)) {
+            return res
+                .status(400)
+                .json({ message: "Product type ID parameter is required." });
+        }
+        const productType = yield ProductType_1.default.findOne({ _id: req.body.id }).exec();
+        if (!productType) {
+            return res
+                .status(409)
+                .json({ message: `No product type matches ID ${req.body.id}.` });
+        }
+        const productType2 = yield ProductType_1.default.findOne({
+            productType: req.body.productType,
+        }).exec();
+        if (productType2 && (productType2 === null || productType2 === void 0 ? void 0 : productType2.id) !== (productType === null || productType === void 0 ? void 0 : productType.id)) {
+            console.log({ message: `Naming conflict` });
+            return res.status(409).json({ message: `Naming conflict`, aa: "bb" });
+        }
+        if ((_b = req.body) === null || _b === void 0 ? void 0 : _b.productType) {
+            productType.productType = req.body.productType;
+        }
+        const result = yield productType.save();
+        res.json(result);
+    }
+    catch (error) {
+        res.status(400).json(error);
+    }
+});
 const getAllProductTypes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const productTypes = yield ProductType_1.default.find();
     if (!productTypes)
@@ -43,8 +74,8 @@ const getAllProductTypes = (req, res) => __awaiter(void 0, void 0, void 0, funct
     res.json(productTypes.sort((a, b) => a.productType.localeCompare(b.productType)));
 });
 const deleteProductType = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
-    const id = (_a = req === null || req === void 0 ? void 0 : req.body) === null || _a === void 0 ? void 0 : _a.id;
+    var _c;
+    const id = (_c = req === null || req === void 0 ? void 0 : req.body) === null || _c === void 0 ? void 0 : _c.id;
     if (!id)
         return res.status(400).json({ message: "Usage ID required" });
     if (!mongoose_1.default.Types.ObjectId.isValid(id))
@@ -64,4 +95,9 @@ const deleteProductType = (req, res) => __awaiter(void 0, void 0, void 0, functi
     const result = yield productType.deleteOne({ _id: req.body.id });
     res.json(result);
 });
-exports.default = { createProductType, getAllProductTypes, deleteProductType };
+exports.default = {
+    createProductType,
+    getAllProductTypes,
+    deleteProductType,
+    updateProductType,
+};

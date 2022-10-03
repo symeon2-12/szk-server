@@ -34,6 +34,35 @@ const createFilter = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         console.error(err);
     }
 });
+const updateFilter = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    try {
+        if (!((_a = req === null || req === void 0 ? void 0 : req.body) === null || _a === void 0 ? void 0 : _a.id)) {
+            return res
+                .status(400)
+                .json({ message: "Filter ID parameter is required." });
+        }
+        const filter = yield Filter_1.default.findOne({ _id: req.body.id }).exec();
+        if (!filter) {
+            return res
+                .status(409)
+                .json({ message: `No filter matches ID ${req.body.id}.` });
+        }
+        const filter2 = yield Filter_1.default.findOne({ filter: req.body.filter }).exec();
+        if (filter2 && (filter2 === null || filter2 === void 0 ? void 0 : filter2.id) !== (filter === null || filter === void 0 ? void 0 : filter.id)) {
+            console.log({ message: `Naming conflict` });
+            return res.status(409).json({ message: `Naming conflict`, aa: "bb" });
+        }
+        if ((_b = req.body) === null || _b === void 0 ? void 0 : _b.filter) {
+            filter.filter = req.body.filter;
+        }
+        const result = yield filter.save();
+        res.json(result);
+    }
+    catch (error) {
+        res.status(400).json(error);
+    }
+});
 const getAllFilters = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const filters = yield Filter_1.default.find();
     if (!filters)
@@ -41,8 +70,8 @@ const getAllFilters = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     res.json(filters.sort((a, b) => a.filter.localeCompare(b.filter)));
 });
 const deleteFilter = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
-    const id = (_a = req === null || req === void 0 ? void 0 : req.body) === null || _a === void 0 ? void 0 : _a.id;
+    var _c;
+    const id = (_c = req === null || req === void 0 ? void 0 : req.body) === null || _c === void 0 ? void 0 : _c.id;
     if (!id)
         return res.status(400).json({ message: "Filter ID required" });
     if (!mongoose_1.default.Types.ObjectId.isValid(id))
@@ -67,4 +96,4 @@ const deleteFilter = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const result = yield filter.deleteOne({ _id: req.body.id });
     res.json(result);
 });
-exports.default = { createFilter, getAllFilters, deleteFilter };
+exports.default = { createFilter, getAllFilters, deleteFilter, updateFilter };

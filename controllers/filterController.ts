@@ -25,6 +25,37 @@ const createFilter = async (req: Request, res: Response) => {
   }
 };
 
+const updateFilter = async (req: Request, res: Response) => {
+  try {
+    if (!req?.body?.id) {
+      return res
+        .status(400)
+        .json({ message: "Filter ID parameter is required." });
+    }
+
+    const filter = await Filter.findOne({ _id: req.body.id }).exec();
+    if (!filter) {
+      return res
+        .status(409)
+        .json({ message: `No filter matches ID ${req.body.id}.` });
+    }
+
+    const filter2 = await Filter.findOne({ filter: req.body.filter }).exec();
+    if (filter2 && filter2?.id !== filter?.id) {
+      console.log({ message: `Naming conflict` });
+      return res.status(409).json({ message: `Naming conflict`, aa: "bb" });
+    }
+
+    if (req.body?.filter) {
+      filter.filter = req.body.filter;
+    }
+    const result = await filter.save();
+    res.json(result);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
 const getAllFilters = async (req: Request, res: Response) => {
   const filters = await Filter.find();
   if (!filters) return res.status(204).json({ message: "No filters found" });
@@ -59,4 +90,4 @@ const deleteFilter = async (req: Request, res: Response) => {
   res.json(result);
 };
 
-export default { createFilter, getAllFilters, deleteFilter };
+export default { createFilter, getAllFilters, deleteFilter, updateFilter };

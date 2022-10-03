@@ -20,6 +20,16 @@ content-type: application/json
     
 }
 
+### update product family
+PUT http://localhost:3500/productfamilies/update HTTP/1.1
+content-type: application/json
+
+{
+    "id":"62ee43c04ca8fe90b44f52c3",
+    "productFamily" : "Aster",
+    "productType": "62d08ea41def37719971b148"
+}
+
 ### get product families by type
 GET http://localhost:3500/productfamilies/bytype HTTP/1.1
 content-type: application/json

@@ -27,6 +27,39 @@ const createProductType = async (req: Request, res: Response) => {
   }
 };
 
+const updateProductType = async (req: Request, res: Response) => {
+  try {
+    if (!req?.body?.id) {
+      return res
+        .status(400)
+        .json({ message: "Product type ID parameter is required." });
+    }
+
+    const productType = await ProductType.findOne({ _id: req.body.id }).exec();
+    if (!productType) {
+      return res
+        .status(409)
+        .json({ message: `No product type matches ID ${req.body.id}.` });
+    }
+
+    const productType2 = await ProductType.findOne({
+      productType: req.body.productType,
+    }).exec();
+    if (productType2 && productType2?.id !== productType?.id) {
+      console.log({ message: `Naming conflict` });
+      return res.status(409).json({ message: `Naming conflict`, aa: "bb" });
+    }
+
+    if (req.body?.productType) {
+      productType.productType = req.body.productType;
+    }
+    const result = await productType.save();
+    res.json(result);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
 const getAllProductTypes = async (req: Request, res: Response) => {
   const productTypes = await ProductType.find();
   if (!productTypes)
@@ -57,4 +90,9 @@ const deleteProductType = async (req: Request, res: Response) => {
   res.json(result);
 };
 
-export default { createProductType, getAllProductTypes, deleteProductType };
+export default {
+  createProductType,
+  getAllProductTypes,
+  deleteProductType,
+  updateProductType,
+};
