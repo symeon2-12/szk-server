@@ -116,6 +116,8 @@ const getProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     if (!((_c = req === null || req === void 0 ? void 0 : req.params) === null || _c === void 0 ? void 0 : _c.id))
         return res.status(400).json({ message: "Product ID required" });
     const product = yield Product_1.default.findOne({ _id: req.params.id })
+        .populate("productType", "productType")
+        .populate("productFamily", "productFamily")
         .populate("filters", "filter")
         .exec();
     if (!product) {

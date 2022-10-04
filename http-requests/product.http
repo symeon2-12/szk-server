@@ -25,7 +25,7 @@ content-type: application/json
 }
 
 ### get product by id
-GET http://localhost:3500/product/getbyid/62ee41f64ca8fe90b44f5296 HTTP/1.1
+GET http://localhost:3500/product/getbyid/63067249c6bf37cd3abee015 HTTP/1.1
 content-type: application/json
 
 ### update product by id

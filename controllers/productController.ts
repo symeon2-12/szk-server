@@ -116,6 +116,8 @@ const getProduct = async (req: Request, res: Response) => {
   if (!req?.params?.id)
     return res.status(400).json({ message: "Product ID required" });
   const product = await Product.findOne({ _id: req.params.id })
+    .populate("productType", "productType")
+    .populate("productFamily", "productFamily")
     .populate("filters", "filter")
     .exec();
   if (!product) {
